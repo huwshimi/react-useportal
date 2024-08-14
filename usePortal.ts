@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback, useMemo, ReactNode, DOMAttributes, SyntheticEvent, MutableRefObject, MouseEvent } from 'react'
-import { createPortal, findDOMNode } from 'react-dom'
+import { createPortal } from 'react-dom'
 import useSSR from 'use-ssr'
 
 type HTMLElRef = MutableRefObject<HTMLElement>
@@ -66,7 +66,7 @@ export default function usePortal({
 
   const elToMountTo = useMemo(() => {
     if (isServer) return
-    return (bindTo && findDOMNode(bindTo)) || document.body
+    return bindTo || document.body
   }, [isServer, bindTo])
 
   const createCustomEvent = (e: any) => {

@@ -1,5 +1,5 @@
-import React , { useEffect, useState } from 'react'
-import { render } from 'react-dom'
+import React , { useEffect, useRef, useState } from 'react'
+import { createRoot } from 'react-dom/client';
 import usePortal from '../usePortal'
 
 const Exmaple1 = () => {
@@ -93,6 +93,28 @@ const Example3 = () => {
   )
 }
 
+const Example4 = () => {
+  const ref = useRef();
+  const { togglePortal, isOpen, Portal } = usePortal({
+    bindTo: ref.current,
+  })
+
+  return (
+    <>
+      <h3>Example 4</h3>
+      <div ref={ref}>Container</div>
+      <button onClick={togglePortal}>Toggle Portal</button>
+      {isOpen && (
+        <Portal>
+          <div>
+            This portal is rendered inside the container using <code>bindTo</code>.
+          </div>
+        </Portal>
+      )}
+    </>
+  )
+}
+
 // this should attach via `bind` so whatever you "bind" it to, you can click
 // and it will apear near where you click. Need to figure out how to handle
 // this though. THIS IS NOT IMPLEMENTED, JUST POTENTIAL SYNTAX
@@ -119,8 +141,10 @@ function App() {
       <Exmaple1 />
       <Example2 />
       <Example3 />
+      <Example4 />
     </>
   )
 }
 
-render(<App />, document.getElementById('root'))
+
+createRoot(document.getElementById('root')).render(<App />);
